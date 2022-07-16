@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Enums;
 using Events;
 using Mirror;
+using Player;
 using UnityEngine;
 
 namespace Network
@@ -13,7 +14,7 @@ namespace Network
 
         private GameObject ball;
         
-        private readonly Dictionary<PlayerSide, int> scores = new Dictionary<PlayerSide, int>();
+        private readonly Dictionary<PlayerSide, PlayerDataModel> scores = new Dictionary<PlayerSide, PlayerDataModel>();
 
         public override void OnStartServer()
         {
@@ -51,7 +52,10 @@ namespace Network
         
         private void HandleGoal(PlayerSide playerSide)
         {
-            scores[playerSide]++;
+            PlayerDataModel playerData = scores[playerSide];
+            playerData.score++;
+
+            Debug.Log(scores[playerSide].score);
         }
     }
 }
