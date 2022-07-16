@@ -1409,7 +1409,8 @@ MonoBehaviour:
   playerSpawnMethod: 1
   spawnPrefabs:
   - {fileID: 1080679924113744, guid: dadcc704e6b740b4e81c4a9b4643acdc, type: 3}
-  ball: {fileID: 1080679924113744, guid: dadcc704e6b740b4e81c4a9b4643acdc, type: 3}
+  ballRespawnTime: 1
+  ballPrefab: {fileID: 1080679924113744, guid: dadcc704e6b740b4e81c4a9b4643acdc, type: 3}
   positionList:
   - side: 0
     transform: {fileID: 473997961}

@@ -14,9 +14,11 @@ namespace Network
     public class NetworkManagerPong : NetworkManager
     {
         [SerializeField] private float ballRespawnTime;
-        [SerializeField] private GameObject ball;
+        [SerializeField] private GameObject ballPrefab;
         [SerializeField] private List<RacketModel> positionList;
 
+        private GameObject ballInstance;
+        
         private readonly List<PlayerModel> playersList = new List<PlayerModel>();
 
         public override void OnStartServer()
@@ -47,8 +49,8 @@ namespace Network
 
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
         {
-            if (ball != null)
-                NetworkServer.Destroy(ball);
+            if (ballInstance != null)
+                NetworkServer.Destroy(ballInstance);
 
             playersList.RemoveAll(model => model.ConnectionId == conn.connectionId);
 
@@ -61,7 +63,7 @@ namespace Network
             PlayerModel playerModel = playersList.First(model => model.Side == playerSide);
             playerModel.AddScore();
 
-            NetworkServer.Destroy(ball);
+            NetworkServer.Destroy(ballInstance);
             this.CallWithDelay(SpawnBall, ballRespawnTime);
 
             GameEvents.ShowScoreEvent.Invoke(new ShowScoreData(playerModel.Score, playerModel.Side));
@@ -87,8 +89,8 @@ namespace Network
 
         private void SpawnBall()
         {
-            ball = Instantiate(ball);
-            NetworkServer.Spawn(ball);
+            ballInstance = Instantiate(ballPrefab);
+            NetworkServer.Spawn(ballInstance);
         }
     }
 }
