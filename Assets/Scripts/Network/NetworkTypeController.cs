@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 
-namespace Manager
+namespace Network
 {
     public class NetworkTypeController : MonoBehaviour
     {

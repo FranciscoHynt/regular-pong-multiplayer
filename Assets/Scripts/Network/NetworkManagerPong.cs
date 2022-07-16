@@ -1,7 +1,7 @@
 using Mirror;
 using UnityEngine;
 
-namespace Manager
+namespace Network
 {
     public class NetworkManagerPong : NetworkManager
     {
@@ -21,6 +21,14 @@ namespace Manager
                 ball = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Ball"));
                 NetworkServer.Spawn(ball);
             }
+        }
+
+        private void OnConnectedToServer()
+        {
+            Canvas uiCanvas = gameObject.AddComponent<Canvas>();
+            uiCanvas.scaleFactor = 1;
+            uiCanvas.pixelPerfect = true;
+            uiCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
         }
 
         public override void OnServerDisconnect(NetworkConnectionToClient conn)

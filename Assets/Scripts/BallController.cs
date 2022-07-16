@@ -1,4 +1,5 @@
 using Mirror;
+using Player;
 using UnityEngine;
 
 public class BallController : NetworkBehaviour
@@ -52,6 +53,6 @@ public class BallController : NetworkBehaviour
     [ClientRpc]
     private void DisplayVfx(Vector3 position)
     {
-        GameObject particle = Instantiate(particleEffect, position, Quaternion.identity);
+        Instantiate(particleEffect, position, Quaternion.identity);
     }
 }
