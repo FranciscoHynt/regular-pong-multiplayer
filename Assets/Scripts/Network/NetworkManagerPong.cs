@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Enums;
+using Events;
 using Mirror;
 using UnityEngine;
 
@@ -9,7 +12,21 @@ namespace Network
         [SerializeField] private Transform rightRacketSpawn;
 
         private GameObject ball;
+        
+        private readonly Dictionary<PlayerSide, int> scores = new Dictionary<PlayerSide, int>();
 
+        public override void OnStartServer()
+        {
+            RegisterEvents();
+            
+            base.OnStartServer();
+        }
+
+        private void RegisterEvents()
+        {
+            GameEvents.GoalEvent.AddListener(HandleGoal);
+        }
+        
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
             Transform start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;
@@ -21,22 +38,20 @@ namespace Network
                 ball = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Ball"));
                 NetworkServer.Spawn(ball);
             }
+            
         }
-
-        private void OnConnectedToServer()
-        {
-            Canvas uiCanvas = gameObject.AddComponent<Canvas>();
-            uiCanvas.scaleFactor = 1;
-            uiCanvas.pixelPerfect = true;
-            uiCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        }
-
+        
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
         {
             if (ball != null)
                 NetworkServer.Destroy(ball);
 
             base.OnServerDisconnect(conn);
+        }
+        
+        private void HandleGoal(PlayerSide playerSide)
+        {
+            scores[playerSide]++;
         }
     }
 }
