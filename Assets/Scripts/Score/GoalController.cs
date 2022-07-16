@@ -16,7 +16,7 @@ namespace Score
             scoringSide = transform.position.x > 0 ? PlayerSide.Left : PlayerSide.Right;
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnCollisionEnter2D(Collision2D other)
         {
             if (isServer && other.collider.CompareTag("Ball"))
             {

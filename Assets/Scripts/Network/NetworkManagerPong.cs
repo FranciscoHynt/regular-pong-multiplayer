@@ -7,11 +7,13 @@ using Events;
 using Mirror;
 using Player;
 using UnityEngine;
+using Utils;
 
 namespace Network
 {
     public class NetworkManagerPong : NetworkManager
     {
+        [SerializeField] private float ballRespawnTime;
         [SerializeField] private GameObject ball;
         [SerializeField] private List<RacketModel> positionList;
 
@@ -19,9 +21,9 @@ namespace Network
 
         public override void OnStartServer()
         {
-            RegisterEvents();
-
             base.OnStartServer();
+            
+            RegisterEvents();
         }
 
         private void RegisterEvents()
@@ -32,7 +34,6 @@ namespace Network
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
             PlayerModel newPlayer = new PlayerModel(conn.connectionId, GetPlayerSide());
-            
             playersList.Add(newPlayer);
 
             GameObject player = Instantiate(playerPrefab, GetSideStartPosition(newPlayer.Side), Quaternion.identity);
@@ -40,8 +41,7 @@ namespace Network
 
             if (numPlayers == maxConnections)
             {
-                ball = Instantiate(ball);
-                NetworkServer.Spawn(ball);
+                SpawnBall();
             }
         }
 
@@ -55,22 +55,23 @@ namespace Network
             base.OnServerDisconnect(conn);
         }
 
+        [Server]
         private void HandleGoal(PlayerSide playerSide)
         {
-            playersList.First(model => model.Side == playerSide).AddScore();
+            PlayerModel playerModel = playersList.First(model => model.Side == playerSide);
+            playerModel.AddScore();
 
-            foreach (PlayerModel scores in playersList)
-            {
-                Debug.Log(scores.Side);
-                Debug.Log(scores.Score);
-            }
+            NetworkServer.Destroy(ball);
+            this.CallWithDelay(SpawnBall, ballRespawnTime);
+
+            GameEvents.ShowScoreEvent.Invoke(new ShowScoreData(playerModel.Score, playerModel.Side));
         }
 
         private PlayerSide GetPlayerSide()
         {
             if (numPlayers == 0)
                 return PlayerSide.Left;
-                
+
             return playersList[0].Side switch
             {
                 PlayerSide.Left => PlayerSide.Right,
@@ -82,6 +83,12 @@ namespace Network
         private Vector3 GetSideStartPosition(PlayerSide side)
         {
             return positionList.First(model => model.Side == side).Transform.position;
+        }
+
+        private void SpawnBall()
+        {
+            ball = Instantiate(ball);
+            NetworkServer.Spawn(ball);
         }
     }
 }
