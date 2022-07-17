@@ -7,6 +7,7 @@ namespace Score
     public class BallController : NetworkBehaviour
     {
         [SerializeField] private float speed = 30;
+        [SerializeField] private float colliderHeight;
         [SerializeField] private Rigidbody2D rigidbody2d;
         [SerializeField] private GameObject particleEffect;
 
@@ -39,7 +40,7 @@ namespace Score
         {
             if (col.transform.GetComponent<PlayerController>())
             {
-                float y = HitFactor(transform.position, col.transform.position, col.collider.bounds.size.y);
+                float y = HitFactor(transform.position, col.transform.position, colliderHeight);
                 float x = col.relativeVelocity.x > 0 ? 1 : -1;
 
                 Vector2 dir;
