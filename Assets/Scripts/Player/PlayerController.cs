@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Events;
 using Mirror;
 using UnityEngine;
 using Utils;
@@ -13,6 +14,11 @@ namespace Player
 
         private Vector2 ballVelocity = Vector2.zero;
         private List<GameObject> childrenObjects = new List<GameObject>();
+
+        private void Awake()
+        {
+            GameEvents.GoalEvent.AddListener(side => RestartPlayers());
+        }
 
         public void Start()
         {
@@ -31,6 +37,11 @@ namespace Player
             }
         }
 
+        private void RestartPlayers()
+        {
+            childrenObjects.ForEach(child => child.SetActive(true));
+        }
+
         [ServerCallback]
         private void OnCollisionEnter2D(Collision2D other)
         {
@@ -38,10 +49,11 @@ namespace Player
             {
                 GameObject colliderGameObject = other.GetContact(0).otherCollider.gameObject;
 
-                Debug.Log(colliderGameObject.name);
-                Debug.Log(childrenObjects.IndexOf(colliderGameObject));
-                colliderGameObject.SetActive(false);
-                DeactivateObjectOnPlayer(childrenObjects.IndexOf(colliderGameObject));
+                if (childrenObjects.Count(child => child.activeSelf) > 1)
+                {
+                    colliderGameObject.SetActive(false);
+                    DeactivateObjectOnPlayer(childrenObjects.IndexOf(colliderGameObject));
+                }
             }
         }
 
