@@ -40,6 +40,7 @@ namespace Score
         {
             if (col.transform.GetComponent<PlayerController>())
             {
+                
                 float y = HitFactor(transform.position, col.transform.position, colliderHeight);
                 float x = col.relativeVelocity.x > 0 ? 1 : -1;
 
