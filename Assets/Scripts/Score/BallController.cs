@@ -27,7 +27,7 @@ namespace Score
             trail.time = 1f;
             trail.emitting = true;
             trail.widthCurve = AnimationCurve.EaseInOut(0, 0.5f, 1, 0);
-            trail.sharedMaterial = Resources.Load<Material>("Materials/CyanMaterial.mat");
+            trail.sharedMaterial = Resources.Load<Material>("Materials/CyanMaterial");
         }
 
         float HitFactor(Vector2 ballPos, Vector2 racketPos, float racketHeight)
@@ -40,7 +40,6 @@ namespace Score
         {
             if (col.transform.GetComponent<PlayerController>())
             {
-                
                 float y = HitFactor(transform.position, col.transform.position, colliderHeight);
                 float x = col.relativeVelocity.x > 0 ? 1 : -1;
 
