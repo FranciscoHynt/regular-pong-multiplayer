@@ -1,4 +1,5 @@
 using Mirror;
+using ObjectPool.Instances;
 using Player;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ namespace Score
     {
         [SerializeField] private float speed = 30;
         [SerializeField] private float colliderHeight;
+        [SerializeField] private HitVfx particleEffect;
         [SerializeField] private Rigidbody2D rigidbody2d;
-        [SerializeField] private GameObject particleEffect;
 
         public override void OnStartServer()
         {
@@ -56,7 +57,8 @@ namespace Score
         [ClientRpc]
         private void DisplayVfx(Vector3 position)
         {
-            Instantiate(particleEffect, position, Quaternion.identity);
+            HitVfx pooledInstance = particleEffect.GetPooledInstance<HitVfx>();
+            pooledInstance.transform.position = position;
         }
     }
 }

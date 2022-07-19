@@ -169,8 +169,8 @@ MonoBehaviour:
   syncInterval: 0.1
   speed: 30
   colliderHeight: 24
+  particleEffect: {fileID: -5467395307932422735, guid: 33425de595b52b546942aef34929da46, type: 3}
   rigidbody2d: {fileID: 50354248948880112}
-  particleEffect: {fileID: 941620430441130697, guid: 33425de595b52b546942aef34929da46, type: 3}
 --- !u!114 &114121325390084138
 MonoBehaviour:
   m_ObjectHideFlags: 0
