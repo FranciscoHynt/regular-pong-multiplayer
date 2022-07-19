@@ -12,16 +12,22 @@ namespace Player
         [SerializeField] private float speed;
         [SerializeField] private Rigidbody2D rigidbody2d;
 
+        private Vector2 startPos;
+        private NetworkTransform networkTransform;
         private Vector2 ballVelocity = Vector2.zero;
         private List<GameObject> childrenObjects = new List<GameObject>();
 
-        private void Awake()
+        public override void OnStartServer()
         {
+            base.OnStartServer();
+
             GameEvents.GoalEvent.AddListener(side => RestartPlayers());
         }
 
         public void Start()
         {
+            startPos = transform.position;
+
             childrenObjects = gameObject
                 .GetChildren()
                 .OrderBy(child => child.name)
@@ -40,6 +46,7 @@ namespace Player
         private void RestartPlayers()
         {
             childrenObjects.ForEach(child => child.SetActive(true));
+            RestartObjectsOnPlayer();
         }
 
         [ServerCallback]
@@ -61,6 +68,13 @@ namespace Player
         private void DeactivateObjectOnPlayer(int childIndex)
         {
             childrenObjects[childIndex].SetActive(false);
+        }
+
+        [ClientRpc]
+        private void RestartObjectsOnPlayer()
+        {
+            transform.position = startPos;
+            childrenObjects.ForEach(child => child.SetActive(true));
         }
     }
 }
