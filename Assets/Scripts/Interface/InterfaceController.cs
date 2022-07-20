@@ -14,10 +14,16 @@ namespace Interface
         public override void OnStartServer()
         {
             base.OnStartServer();
-            
+
             RegisterEvents();
         }
-        
+
+        public override void OnStartClient()
+        {
+            leftScore.gameObject.SetActive(true);
+            rightScore.gameObject.SetActive(true);
+        }
+
         private void RegisterEvents()
         {
             GameEvents.ShowScoreEvent.AddListener(UpdateScores);
