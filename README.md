@@ -1,7 +1,7 @@
 <h2 align="center">Hi 👋, I'm Francisco Sampaio</h2>
 <h3 align="center">Open-source project of a breakable multiplayer pong </h3>
 
-- 🕹️ Link to use/download the tool [here](https://franciscohynt.itch.io/breakable-multiplayer-pong).
+- 🕹️ Link to use/download the game [here](https://franciscohynt.itch.io/breakable-multiplayer-pong).
 
 - 💬 This project is a network study case.
 
