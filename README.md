@@ -7,7 +7,7 @@
 
 - 👨‍💻 All my projects are available [here](lnk.bio/franciscohynt).
 
-- 🌐 This game was made using [mirror] (https://github.com/vis2k/Mirror), a great thanks to @vis2k
+- 🌐 This game was made using [mirror](https://github.com/vis2k/Mirror), a great thanks to [@vis2k](https://github.com/vis2k).
 
 - 📫 Click [here](https://github.com/FranciscoHynt/FranciscoHynt/raw/4d78fc8ab4bd0880eaecae169c93365113543afc/FRANCISCO%20SAMPAIO.pdf) to download my complete resume.
 
