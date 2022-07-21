@@ -5,9 +5,9 @@
 
 - 💬 This project is a network study case.
 
-- 👨‍💻 All my projects are available [here](https://lnk.bio/ixFT).
+- 👨‍💻 All my projects are available [here](lnk.bio/franciscohynt).
 
-- 📫 Contact me for a complete resume.
+- 📫 Click [here](https://github.com/FranciscoHynt/FranciscoHynt/raw/4d78fc8ab4bd0880eaecae169c93365113543afc/FRANCISCO%20SAMPAIO.pdf) to download my complete resume.
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
